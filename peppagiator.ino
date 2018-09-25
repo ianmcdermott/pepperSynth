@@ -18,6 +18,7 @@ String redTempValue;     // Red RGB pin -> D11
 String greenTempValue;   // Green RGB pin -> D10
 String blueTempValue;     // Blue RGB pin -> D9             // reads each character
 int indexer;
+int redVal, greenVal, blueVal;
 /**** Peppagiator ****/
 String scaleName;
 arpeggiator arpeggiator(6); //initiate and name the arpeggiator class (Output pin)
@@ -90,104 +91,118 @@ void loop() {
       message[index] = '\0';       // Delete the last position
     }
     delay(10);
-    greenArp( 127);
+    greenArp( 255-greenTempValue.toInt());
 
     //    Serial.print("GTV: ");
-    redArp(127);
-  }
-  delay(10);
-  if (scaleName == "ionian") {
-    scale[0] = tonic;
-    scale[1] = major2nd;
-    scale[2] =  minor3rd;
-    scale[3] = fourth;
-    scale[4] = fifth;
-    scale[5] = major6th;
-    scale[6] = minor7th;
-    scale[7] = octave;
-  }  else if (scaleName == "dorian") {
-    scale[0] = tonic;
-    scale[1] = minor2nd;
-    scale[2] =  minor3rd;
-    scale[3] = fourth;
-    scale[4] = fifth;
-    scale[5] = minor6th;
-    scale[6] = minor7th;
-    scale[7] = octave;
-  }  else if (scaleName == "phrygian") {
-    scale[0] = tonic;
-    scale[1] = major2nd;
-    scale[2] =  major3rd;
-    scale[3] = tritone;
-    scale[4] = fifth;
-    scale[5] = major6th;
-    scale[6] = major7th;
-    scale[7] = octave;
-  }  else if (scaleName == "lydian") {
-    scale[0] = tonic;
-    scale[1] = major2nd;
-    scale[2] =  major3rd;
-    scale[3] = fourth;
-    scale[4] = fifth;
-    scale[5] = major6th;
-    scale[6] = minor7th;
-    scale[7] = octave;
-  }  else if (scaleName == "mixolydian") {
-    scale[0] = tonic;
-    scale[1] = major2nd;
-    scale[2] =  minor3rd;
-    scale[3] = fourth;
-    scale[4] = fifth;
-    scale[5] = minor6th;
-    scale[6] = minor7th;
-    scale[7] = octave;
-  }  else if (scaleName == "aeolian") {
-    scale[0] = tonic;
-    scale[1] = minor2nd;
-    scale[2] =  minor3rd;
-    scale[3] = fourth;
-    scale[4] = tritone;
-    scale[5] = minor6th;
-    scale[6] = minor7th;
-    scale[7] = octave;
-  }  else   {
-    scale[0] = tonic;
-    scale[1] = minor2nd;
-    scale[2] =  minor3rd;
-    scale[3] = fourth;
-    scale[4] = tritone;
-    scale[5] = minor6th;
-    scale[6] = minor7th;
-    scale[7] = octave;
-  }
-  Serial.println(scaleName);
+    redArp(255-redTempValue.toInt());
+    redVal = redTempValue.toInt();
 
-  if (flag == 0) {
-    analogWrite(redPin, 255 - redTempValue.toInt());
-    analogWrite(greenPin, 255 - greenTempValue.toInt());
-    analogWrite(bluePin,  255 - blueTempValue.toInt());
+    greenVal = greenTempValue.toInt();
 
-    flag = 1;
-    for (i = 0; i < 12; i++) {
-      message[i] = '\0';
+    blueVal = blueTempValue.toInt();
+
+    delay(10);
+
+
+//    Serial.println(blueVal);
+    if (scaleName == "ionian") {
+      scale[0] = tonic;
+      scale[1] = major2nd;
+      scale[2] =  minor3rd;
+      scale[3] = fourth;
+      scale[4] = fifth;
+      scale[5] = major6th;
+      scale[6] = minor7th;
+      scale[7] = octave;
+    }  else if (scaleName == "dorian") {
+      scale[0] = tonic;
+      scale[1] = minor2nd;
+      scale[2] =  minor3rd;
+      scale[3] = fourth;
+      scale[4] = fifth;
+      scale[5] = minor6th;
+      scale[6] = minor7th;
+      scale[7] = octave;
+    }  else if (scaleName == "phrygian") {
+      scale[0] = tonic;
+      scale[1] = major2nd;
+      scale[2] =  major3rd;
+      scale[3] = tritone;
+      scale[4] = fifth;
+      scale[5] = major6th;
+      scale[6] = major7th;
+      scale[7] = octave;
+    }  else if (scaleName == "lydian") {
+      scale[0] = tonic;
+      scale[1] = major2nd;
+      scale[2] =  major3rd;
+      scale[3] = fourth;
+      scale[4] = fifth;
+      scale[5] = major6th;
+      scale[6] = minor7th;
+      scale[7] = octave;
+    }  else if (scaleName == "mixolydian") {
+      scale[0] = tonic;
+      scale[1] = major2nd;
+      scale[2] =  minor3rd;
+      scale[3] = fourth;
+      scale[4] = fifth;
+      scale[5] = minor6th;
+      scale[6] = minor7th;
+      scale[7] = octave;
+    }  else if (scaleName == "aeolian") {
+      scale[0] = tonic;
+      scale[1] = minor2nd;
+      scale[2] =  minor3rd;
+      scale[3] = fourth;
+      scale[4] = tritone;
+      scale[5] = minor6th;
+      scale[6] = minor7th;
+      scale[7] = octave;
+    }  else   {
+      scale[0] = tonic;
+      scale[1] = minor2nd;
+      scale[2] =  minor3rd;
+      scale[3] = fourth;
+      scale[4] = tritone;
+      scale[5] = minor6th;
+      scale[6] = minor7th;
+      scale[7] = octave;
     }
-    //resets the index
-    index = 0;
+//    Serial.println(scaleName);
+
+    if (flag == 0) {
+
+      analogWrite(redPin, 255 - redTempValue.toInt());
+      analogWrite(greenPin, 255 - greenTempValue.toInt());
+      analogWrite(bluePin,  255 - blueTempValue.toInt());
+
+      flag = 1;
+      for (i = 0; i < 12; i++) {
+        message[i] = '\0';
+      }
+      //resets the index
+      index = 0;
+    }
+    indexer = int( map((255 - blueTempValue.toInt()), 0, 256, 0, 7.9999));
+//    Serial.print("red3: ");
+//    Serial.println(redTempValue.toInt());
+//    Serial.print("green3: ");
+//    Serial.println(greenTempValue.toInt());
+//    Serial.print("blue3: ");
+//    Serial.println(blueTempValue.toInt());
+    for (int i = 0; i < indexer; i++) {
+      //    Serial.print("Val: ");
+      //    Serial.println(values[i]);
+      //    Serial.print(i);
+      //    Serial.print(" : ");
+
+      //define a BPM and run the arpeggiator.play function
+      arpeggiator.play(140, scale[i], values[i]);
+
+    }
+    //  Serial.print( ");
   }
-  indexer = int( map((255 - blueTempValue.toInt()), 0, 255, 0, 7.9999));
-
-  for (int i = 0; i < 8; i++) {
-    //    Serial.print("Val: ");
-    //    Serial.println(values[i]);
-    //    Serial.print(i);
-    //    Serial.print(" : ");
-
-    //define a BPM and run the arpeggiator.play function
-    arpeggiator.play(140, scale[i], e);
-
-  }
-  //  Serial.print( ");
-
 }
 
 void redArp(int r) {
@@ -213,7 +228,7 @@ void redArp(int r) {
     }
   }
   delay(10);
-  Serial.print("done rd");
+  //  Serial.print("done rd");
 
 }
 
@@ -233,6 +248,6 @@ void greenArp(int g) {
   } else {
     scaleName =  "locrian";
   }
-  Serial.print("done green");
+  //  Serial.print("done green");
   delay(10);
 }
